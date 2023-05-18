@@ -11,25 +11,24 @@ import java.util.List;
 @Repository("jndao")
 public class JoinDAOImpl implements JoinDAO {
 
-    @Autowired private SqlSession sqlSession;
-
     @Override
     public List<Zipcode> selectZipcode(String dong) {
-        return sqlSession.selectList("join.findZipcode", dong);
+        return null;
     }
 
     @Override
     public int insertMember(Member m) {
-        return sqlSession.insert("join.insertMember", m);
+        return 0;
     }
 
     @Override
     public int selectOneUserid(String uid) {
-        return sqlSession.selectOne("join.selectOneUid", uid);
+        return 0;
     }
 
     @Override
     public int selectOneMember(Member m) {
         return 0;
     }
+
 }
