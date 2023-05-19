@@ -17,7 +17,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<Board> readBoard(int cpage) {
 
-        return bddao.selectBoard(cpage);
+        return bddao.selectBoard(cpage - 1);
     }
 
     @Override
