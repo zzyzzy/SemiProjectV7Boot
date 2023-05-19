@@ -6,7 +6,6 @@ import zzyzzy.springboot.semiprojectv7.model.Member;
 public interface MemberRepository
                  extends JpaRepository<Member, Long> {
 
-    boolean findByUseridEquals(String uid);
+    Member findByUseridAndPasswd(String userid, String passwd);
 
-    void findByUserid(String abc123);
 }

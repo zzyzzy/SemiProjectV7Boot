@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import zzyzzy.springboot.semiprojectv7.model.Member;
-import zzyzzy.springboot.semiprojectv7.model.Zipcode;
 import zzyzzy.springboot.semiprojectv7.repository.MemberRepository;
-import zzyzzy.springboot.semiprojectv7.repository.ZipcodeRepository;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class MemberTest {
@@ -55,5 +55,25 @@ public class MemberTest {
 
         memberRepository.delete(m);
     }
+
+
+    @Test
+    @DisplayName("member login")
+    public void loginMember() {
+        Member m = new Member();
+        m.setUserid("abc123");
+        m.setPasswd("abc123");
+
+        assertNull(memberRepository.findByUseridAndPasswd(
+                        m.getUserid(), m.getPasswd()) );
+
+        m.setUserid("abc123");
+        m.setPasswd("987xyz");
+
+        assertNotNull(memberRepository.findByUseridAndPasswd(
+                m.getUserid(), m.getPasswd()) );
+    }
+
+
 
 }
