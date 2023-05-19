@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "member")
@@ -33,6 +34,7 @@ public class Member {
     private String phone;
 
     @CreatedDate
+    @Column(insertable = false, updatable = false)
     private LocalDateTime regdate;
 
 }
