@@ -2,9 +2,11 @@ package zzyzzy.springboot.semiprojectv7.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import zzyzzy.springboot.semiprojectv7.model.Board;
 import zzyzzy.springboot.semiprojectv7.repository.BoardRepository;
 
+import javax.transaction.TransactionScoped;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +43,7 @@ public class BoardDAOImpl implements BoardDAO {
 
     @Override
     public Board selectOneBoard(int bno) {
+        boardRepository.countViewBoard((long) bno);
         return boardRepository.findById((long) bno).get();
     }
 
