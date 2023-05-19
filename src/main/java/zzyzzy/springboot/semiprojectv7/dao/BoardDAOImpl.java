@@ -1,6 +1,8 @@
 package zzyzzy.springboot.semiprojectv7.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import zzyzzy.springboot.semiprojectv7.model.Board;
@@ -17,8 +19,10 @@ public class BoardDAOImpl implements BoardDAO {
     BoardRepository boardRepository;
 
     @Override
-    public List<Board> selectBoard(int stbno) {
-        return boardRepository.findAll();
+    public List<Board> selectBoard(int cpage) {
+        Pageable paging = PageRequest.of(cpage, 25);
+
+        return boardRepository.findAll(paging).getContent();
     }
 
     @Override
