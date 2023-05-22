@@ -1,5 +1,6 @@
 package zzyzzy.springboot.semiprojectv7.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,10 +19,14 @@ public interface BoardRepository
     // 단, Modifying, Transactional등을 추가하면 사용가능
     @Modifying
     @Transactional
-    @Query(
-        "update Board set views = views + 1 where bno = :bno")
+    @Query("update Board set views = views + 1 where bno = :bno")
     int countViewBoard(@Param("bno") long bno);
 
     //@Query("select ceil(count(bno)/25) from Board")
     int countBoardBy();
+
+    List<Board> findByTitle(Pageable paging, String fkey);
+    List<Board> findByTitleOrContent(Pageable paging, String fkey1, String fkey2);
+    List<Board> findByUserid(Pageable paging, String fkey);
+    List<Board> findByContent(Pageable paging, String fkey);
 }
