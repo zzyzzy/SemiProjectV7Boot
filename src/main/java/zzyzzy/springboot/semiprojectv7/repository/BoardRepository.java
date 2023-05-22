@@ -26,7 +26,7 @@ public interface BoardRepository
     int countBoardBy();
 
     List<Board> findByTitleLike(Pageable paging, String fkey);
-    List<Board> findByTitleOrContentLike(Pageable paging, String fkey1, String fkey2);
+    List<Board> findByTitleLikeOrContentLike(Pageable paging, String fkey1, String fkey2);
     List<Board> findByUserid(Pageable paging, String fkey);
     List<Board> findByContentLike(Pageable paging, String fkey);
 

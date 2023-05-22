@@ -44,7 +44,7 @@ public class BoardDAOImpl implements BoardDAO {
                 result = boardRepository.findByTitleLike(paging, fkey); break;
 
             case "titcont":// 제목+본문으로 검색
-                result = boardRepository.findByTitleOrContentLike(paging, fkey, fkey); break;
+                result = boardRepository.findByTitleLikeOrContentLike(paging, fkey, fkey); break;
 
             case "userid":// 작성자로 검색
                 fkey = fkey.replace("%", "");
