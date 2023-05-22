@@ -31,8 +31,8 @@ public class BoardDAOImpl implements BoardDAO {
 
     @Override
     public List<Board> selectBoard(Map<String, Object> params) {
-        String fkey = params.get("fkey").toString();
         String ftype = params.get("ftype").toString();
+        String fkey = '%' + params.get("fkey").toString() + '%';
         int cpage = (int) params.get("stbno");
 
         Pageable paging =
@@ -41,16 +41,17 @@ public class BoardDAOImpl implements BoardDAO {
         List<Board> result = null;
         switch (ftype) {
             case "title":// 제목으로 검색
-                result = boardRepository.findByTitle(paging, fkey); break;
+                result = boardRepository.findByTitleLike(paging, fkey); break;
 
             case "titcont":// 제목+본문으로 검색
-                result = boardRepository.findByTitleOrContent(paging, fkey, fkey);break;
+                result = boardRepository.findByTitleOrContentLike(paging, fkey, fkey); break;
 
             case "userid":// 작성자로 검색
-                result = boardRepository.findByUserid(paging, fkey);break;
+                fkey = fkey.replace("%", "");
+                result = boardRepository.findByUserid(paging, fkey); break;
 
             case "content":// 본문으로 검색
-                result = boardRepository.findByContent(paging, fkey);
+                result = boardRepository.findByContentLike(paging, fkey);
         }
 
         return result;
