@@ -30,11 +30,10 @@ public interface BoardRepository
     List<Board> findByUserid(Pageable paging, String fkey);
     List<Board> findByContentContains(Pageable paging, String fkey);
 
-    int countByTitleContains(String fkey);
-    int countByTitleContainsOrContentContains(String fkey1, String fkey2);
-    int countByUserid(String fkey);
-    int countByContentContains(String fkey);
-
+    //int countByTitleContains(String fkey);
+    //int countByTitleContainsOrContentContains(String fkey1, String fkey2);
+    //int countByUserid(String fkey);
+    //int countByContentContains(String fkey);
 
     //@Query("select bno,title,userid,regdate,thumbs,views from board where :ftype = :fkey", nativeQuery = true)
     //List<Board> findBoardBy(Pageable paging, String ftype, String fkey);
