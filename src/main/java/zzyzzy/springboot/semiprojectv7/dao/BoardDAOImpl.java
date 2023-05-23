@@ -1,6 +1,7 @@
 package zzyzzy.springboot.semiprojectv7.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,7 +34,7 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public List<Board> selectBoard(Map<String, Object> params) {
+    public Map<String, Object> selectBoard(Map<String, Object> params) {
 
         // like 검색에 대한 query method
         // findByTitleLike      : %검색어% (% 문자제공 필요)
@@ -45,10 +46,9 @@ public class BoardDAOImpl implements BoardDAO {
         String fkey = params.get("fkey").toString();
         int cpage = (int) params.get("stbno");
 
-        Pageable paging =
-            PageRequest.of(cpage, 25, Sort.Direction.DESC, "bno");
+        Pageable paging = PageRequest.of(cpage, 25, Sort.Direction.DESC, "bno");
 
-        List<Board> result = null;
+        Page<Board> result = null;
         switch (ftype) {
             case "title":// 제목으로 검색
                 result = boardRepository.findByTitleContains(paging, fkey); break;
@@ -63,31 +63,11 @@ public class BoardDAOImpl implements BoardDAO {
                 result = boardRepository.findByContentContains(paging, fkey);
         }
 
-        return result;
-    }
+        Map<String, Object> bds = new HashMap<>();
+        bds.put("bdlist", result.getContent());
+        bds.put("cntpg", result.getTotalPages());
 
-
-    @Override
-    public int countBoard(Map<String, Object> params) {
-        String ftype = params.get("ftype").toString();
-        String fkey = params.get("fkey").toString();
-
-        int cnt = 0;
-        switch (ftype) {
-            case "title":// 제목으로 검색
-                cnt = boardRepository.countByTitleContains(fkey); break;
-
-            case "titcont":// 제목+본문으로 검색
-                cnt = boardRepository.countByTitleContainsOrContentContains(fkey, fkey); break;
-
-            case "userid":// 작성자로 검색
-                cnt = boardRepository.countByUserid(fkey); break;
-
-            case "content":// 본문으로 검색
-                cnt = boardRepository.countByContentContains(fkey);
-        }
-
-        return (int) Math.ceil(cnt / 25);
+        return bds;
     }
 
     @Override

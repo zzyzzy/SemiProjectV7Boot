@@ -9,9 +9,7 @@ public interface BoardService {
 
     Map<String, Object> readBoard(int cpage);
 
-    List<Board> readBoard(int cpage, String ftype, String fkey);
-
-    int countBoard(String ftype, String fkey);
+    Map<String, Object> readBoard(int cpage, String ftype, String fkey);
 
     boolean newBoard(Board bd);
 
