@@ -10,6 +10,7 @@ import zzyzzy.springboot.semiprojectv7.model.Board;
 import zzyzzy.springboot.semiprojectv7.repository.BoardRepository;
 
 import javax.transaction.TransactionScoped;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,13 +21,15 @@ public class BoardDAOImpl implements BoardDAO {
     BoardRepository boardRepository;
 
     @Override
-    public List<Board> selectBoard(int cpage) {
-        // 페이징 시 정렬 순서 지정
-        Pageable paging =
-            //PageRequest.of(cpage, 25, Sort.by("bno").descending());
-            PageRequest.of(cpage, 25, Sort.Direction.DESC, "bno");
+    public Map<String, Object> selectBoard(int cpage) {
 
-        return boardRepository.findAll(paging).getContent();
+        Pageable paging = PageRequest.of(cpage, 25, Sort.Direction.DESC, "bno");
+
+        Map<String, Object> bds = new HashMap<>();
+        bds.put("bdlist", boardRepository.findAll(paging).getContent());
+        bds.put("cntpg", boardRepository.findAll(paging).getTotalPages());
+
+        return bds;
     }
 
     @Override
@@ -63,13 +66,6 @@ public class BoardDAOImpl implements BoardDAO {
         return result;
     }
 
-    @Override
-    public int countBoard() {
-        // select ceil(count(bno)/25) from board
-        int allcnt = boardRepository.countBoardBy();
-
-        return (int) Math.ceil(allcnt / 25);
-    }
 
     @Override
     public int countBoard(Map<String, Object> params) {
