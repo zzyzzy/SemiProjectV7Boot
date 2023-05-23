@@ -5,15 +5,15 @@
 
     <th:block layout:fragment="content">
 
-        <th:block th:if="${cpg > cntpg}">
-            <script th:inline="javascript">
-                location.href="/board/list?cpg=" + [[${cntpg}]];
-            </script>
-        </th:block>
-
         <div id="main" th:with="pglink=${#strings.isEmpty(param.fkey) ?
             '/board/list?cpg=':
             '/board/find?ftype='+param.ftype+'&fkey='+param.fkey+'&cpg='}">
+
+            <th:block th:if="${cpg > cntpg}">
+                <script th:inline="javascript">
+                    location.href=[[${pglink}]] + [[${cntpg}]];
+                </script>
+            </th:block>
 
             <div class="mt-5">
                 <i class="fa-solid fa-pen-to-square fa-2xl"> 게시판 </i>
