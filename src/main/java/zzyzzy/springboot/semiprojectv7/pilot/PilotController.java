@@ -10,11 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -116,5 +118,14 @@ public class PilotController {
         return ResponseEntity.ok()
                     .headers(header).body(resource);
     }
+
+    @GetMapping("/showimg")
+    @ResponseBody  // view 없이 본문 출력
+    public Resource showimg() throws MalformedURLException {
+        String fname = "C:/Java/bootUpload/" + "gendo.jpg";
+
+        return new UrlResource("file:" + fname);
+    }
+
 
 }
