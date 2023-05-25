@@ -69,13 +69,14 @@
                             <th>567</th>
                             <th>1345</th></tr>
 
-                            <tr th:each="pds : ${pdslist}">
+                            <tr th:each="pds, stat : ${pdslist}">
                                 <td th:text="${pds.pno}">&nbsp;</td>
                                 <td><a th:href="|/pds/view?pno=${pds.pno}|"
                                        th:text="${pds.title}">&nbsp;</a></td>
                                 <td th:text="${pds.userid}">&nbsp;</td>
                                 <td th:text="${#strings.substring(pds.regdate,0,10)}">&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td><img th:src="|/assets/img/ftype/${ftypes[__${stat.index}__]}.png|"
+                                     width="30" height="30"></td>
                                 <td th:text="${pds.thumbs}">&nbsp;</td>
                                 <td th:text="${pds.views}">&nbsp;</td></tr>
                         </tbody>
