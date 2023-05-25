@@ -48,12 +48,12 @@ public class PdsServiceImpl implements PdsService {
     }
 
     @Override
-    public Pds readPds(int pno) {
+    public Pds readOnePds(int pno) {
         return pdsdao.selectOnePds(pno);
     }
 
     @Override
-    public PdsAttach readPdsAttach(int pno) {
+    public PdsAttach readOnePdsAttach(int pno) {
         return pdsdao.selectOnePdsAttach(pno);
     }
 
