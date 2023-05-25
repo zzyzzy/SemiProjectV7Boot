@@ -5,4 +5,7 @@ import zzyzzy.springboot.semiprojectv7.model.PdsAttach;
 
 public interface PdsaRepository
                   extends JpaRepository<PdsAttach, Long> {
+
+    PdsAttach findByPno(int pno);
+
 }
