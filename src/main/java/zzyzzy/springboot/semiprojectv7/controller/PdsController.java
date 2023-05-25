@@ -57,4 +57,13 @@ public class PdsController {
         return viewPage;
     }
 
+    @GetMapping("/view")
+    public String view(int pno, Model m) {
+
+        m.addAttribute("pds", pdssrv.readPds(pno));
+        m.addAttribute("attach", pdssrv.readPdsAttach(pno));
+
+        return "pds/view";
+    }
+
 }
