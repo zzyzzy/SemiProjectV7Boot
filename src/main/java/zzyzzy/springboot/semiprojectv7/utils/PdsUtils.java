@@ -1,12 +1,18 @@
 package zzyzzy.springboot.semiprojectv7.utils;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 import zzyzzy.springboot.semiprojectv7.model.PdsAttach;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
@@ -30,7 +36,6 @@ public class PdsUtils {
         // 업로드할 파일 정보 취득
         PdsAttach pa = new PdsAttach();
         pa.setPno((Integer) pinfo.get("pno"));
-
         pa.setFname( attach.getOriginalFilename() );
 
         // 파일명1 : abc123.png -> 파일종류 : png
@@ -56,5 +61,44 @@ public class PdsUtils {
         }
 
         return pa;
+    }
+
+    public HttpHeaders getHeader(String fname, String uuid) {
+        fname = UriUtils.encode(fname, StandardCharsets.UTF_8);
+
+        // 다운로드할 파일의 전체 경로 작성
+        String dfname = makeDfname(fname, uuid);
+        HttpHeaders header = new HttpHeaders();
+        try {
+            header.add("Content-Type",
+                    Files.probeContentType(Paths.get(dfname)));
+            header.add("Content-Disposition",
+                    "attachment; filename=" + fname + "");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return header;
+    }
+
+    private String makeDfname(String fname, String uuid) {
+        int pos = fname.lastIndexOf(".");
+        String name = fname.substring(0, pos);
+        String ext = fname.substring(pos+1);
+
+        return saveDir + name + uuid + "." + ext;
+    }
+
+    public UrlResource getResource(String fname, String uuid) {
+        fname = UriUtils.encode(fname, StandardCharsets.UTF_8);
+
+        // 다운로드할 파일 객체 생성
+        UrlResource resource = null;
+        try {
+            resource = new UrlResource("file:" + makeDfname(fname, uuid));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return resource;
     }
 }
