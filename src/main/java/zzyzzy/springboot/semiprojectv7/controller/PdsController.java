@@ -83,6 +83,9 @@ public class PdsController {
         HttpHeaders header = pdssrv.getHeader(fname, uuid);
         UrlResource resource = pdssrv.getResource(fname, uuid);
 
+        // 다운로드 수 증가
+        pdssrv.downfile(pno);
+
         return ResponseEntity.ok().headers(header).body(resource);
     }
 
