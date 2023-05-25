@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import zzyzzy.springboot.semiprojectv7.dao.PdsDAO;
 import zzyzzy.springboot.semiprojectv7.model.Pds;
+import zzyzzy.springboot.semiprojectv7.model.PdsAttach;
 import zzyzzy.springboot.semiprojectv7.utils.PdsUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service("pdssrv")
 public class PdsServiceImpl implements PdsService {
@@ -14,13 +18,27 @@ public class PdsServiceImpl implements PdsService {
     @Autowired PdsUtils pdsUtils;
 
     @Override
-    public int newPds(Pds pds) {
-        pds.setUuid(pdsUtils.makeUUID());
-        return pdsdao.insertPds(pds);
+    public Map<String, Object> newPds(Pds pds) {
+        pds.setUuid(pdsUtils.makeUUID()); // 식별코드 생성
+        int pno = pdsdao.insertPds(pds); // 폼 데이터 디비에 저장
+
+        // 첨부파일을 시스템에 저장할때 사용할 정보를 Map에 저장
+        Map<String, Object> pinfo = new HashMap<>();
+        pinfo.put("pno", pno);
+        pinfo.put("uuid", pds.getUuid());
+
+        return pinfo;
     }
 
     @Override
-    public boolean newPdsAttach(MultipartFile attach, int pno) {
-        return true;
+    public boolean newPdsAttach(
+            MultipartFile attach, Map<String, Object> pinfo) {
+
+        // 첨부파일 업로드 처리
+        PdsAttach pa = pdsUtils.processUpload(attach, pinfo);
+        // 첨부파일 정보 디비에 저장
+        int pano = pdsdao.insertPdsAttach(pa);
+
+        return (pano > 0) ? true : false;
     }
 }
