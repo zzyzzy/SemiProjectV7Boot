@@ -43,7 +43,7 @@ public class PdsServiceImpl implements PdsService {
     }
 
     @Override
-    public Map<String, Object> readBoard(Integer cpg) {
+    public Map<String, Object> readPds(Integer cpg) {
         return pdsdao.selectPds(cpg - 1);
     }
 
