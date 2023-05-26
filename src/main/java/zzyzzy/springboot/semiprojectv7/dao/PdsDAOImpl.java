@@ -76,4 +76,15 @@ public class PdsDAOImpl implements PdsDAO {
         return pdsReplyRepository.findByPnoOrderByRefnoAscRegdateAsc(pno);
     }
 
+    @Override
+    public int insertReply(PdsReply reply) {
+
+        PdsReply p = pdsReplyRepository.save(reply);
+        int rpno = Math.toIntExact(p.getRpno());
+
+        pdsReplyRepository.updateRefno( rpno );
+
+        return rpno;
+    }
+
 }
