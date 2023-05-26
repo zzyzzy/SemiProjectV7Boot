@@ -87,8 +87,12 @@
                                 <td style="width:25%"><h4 th:text="${rp.userid}"></h4></td>
                                 <td>
                                     <div style="background: yellow; padding: 5px"> [[${rp.regdate}]]
-                                       <span style="float: right"><a th:href="|javascript:showComment(${rp.rpno})|">[추가]</a>
-                                           / [수정] / [삭제]</span> </div>
+                                       <th:block th:if="${not #strings.isEmpty(session.UID)}">
+                                        <span style="float: right">
+                                           <a th:href="|javascript:showComment(${rp.rpno})|">[추가]</a>
+                                           / [수정] / [삭제]</span>
+                                       </th:block>
+                                    </div>
                                     <p style="padding: 5px 0" th:text="${rp.reply}"></p>
                                 </td>
                             </th:block>
