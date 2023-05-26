@@ -78,6 +78,8 @@ public class PdsDAOImpl implements PdsDAO {
 
     @Override
     public int insertReply(PdsReply reply) {
+        // 댓글 저장시 생성되지 않은 댓글번호를
+        // refno에도 저장하기 위해 update문을 한번 더 호출
 
         PdsReply p = pdsReplyRepository.save(reply);
         int rpno = Math.toIntExact(p.getRpno());
@@ -85,6 +87,16 @@ public class PdsDAOImpl implements PdsDAO {
         pdsReplyRepository.updateRefno( rpno );
 
         return rpno;
+    }
+
+    @Override
+    public int insertRreply(PdsReply reply) {
+        // 대댓글 저장시 링크로 이미 전달받은 댓글번호가
+        // refno에 대입됨 - 댓글 저장과는 달리 바로 처리
+
+        long rpno = pdsReplyRepository.save(reply).getRpno();
+
+        return (int) rpno;
     }
 
 }
