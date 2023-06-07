@@ -1,12 +1,31 @@
 // 이미지 첨부 조건 검사
 const checkAttachs = () => {
+    const attachs =
+        document.querySelector("#attachs");
 
+    // 이미지 첨부파일이 하나 이상이라면
+    if ('files' in attachs && attachs.files.length > 0) {
+        // 첨부파일들이 이미지인지 검사
+        for (attach of attachs.files) {
+            //console.log(attach.name + ',' + attach.type + ',' + attach.size);
+            // 이미지 파일의 MIME 형식
+            // image/jpg,image/jpeg,image/png,image/gif
+            if (!attach.type.startsWith('image')) {
+                alert('첨부하려는 파일은 반드시 이미지여야 합니다!');
+                return false;
+            }
+        }
+    } else {
+        alert('하나 이상의 이미지를 선택하세요!!');
+    }
+
+    return false;
 };
 
 // 새글쓰기
 const writebtn = document.querySelector("#writebtn");
 writebtn?.addEventListener('click', () => {
-    const galfrm = document.forms.galfrm;
+   const galfrm = document.forms.galfrm;
     if (galfrm.title.value === '') alert('제목을 작성하세요!');
     else if (galfrm.content.value === '') alert('본문을 작성하세요!');
     else if (!checkAttachs()) alert('이미지 첨부 조건 불일치!!');
