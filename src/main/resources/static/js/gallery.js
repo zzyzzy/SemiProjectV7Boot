@@ -1,7 +1,7 @@
 // 이미지 첨부 조건 검사
 const checkAttachs = () => {
-    const attachs =
-        document.querySelector("#attachs");
+    let checkOk = true;
+    const attachs = document.querySelector("#attachs");
 
     // 이미지 첨부파일이 하나 이상이라면
     if ('files' in attachs && attachs.files.length > 0) {
@@ -12,14 +12,15 @@ const checkAttachs = () => {
             // image/jpg,image/jpeg,image/png,image/gif
             if (!attach.type.startsWith('image')) {
                 alert('첨부하려는 파일은 반드시 이미지여야 합니다!');
-                return false;
+                checkOk = false;
             }
         }
     } else {
         alert('하나 이상의 이미지를 선택하세요!!');
+        checkOk = false;
     }
 
-    return false;
+    return checkOk;
 };
 
 // 새글쓰기
