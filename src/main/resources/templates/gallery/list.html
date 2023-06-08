@@ -39,20 +39,28 @@
 
             <!-- 갤러리 이미지 리스트 -->
             <div class="row justify-content-center">
-                <div th:each="gal : ${#numbers.sequence(1,24)}"
+                <div th:each="gal : ${gallist}"
                         class="card col-12 m-3" style="width: 18rem;">
-                    <img src="http://localhost/cdn/gendo.jpg"
+                    <a th:href="|/gallery/view?gno=${gal.gallery.gno}|">
+                        <img th:src="|http://localhost/cdn/_thumbs/small_${#strings.arraySplit(gal.fname, ';')[0]}|"
                          class="card-img-top" alt="...">
+                    </a>
                     <div class="card-body">
-                        <h5 class="card-title">갤러리 제목</h5>
-                        <p>작성자
-                            <span style="float: right">2023-06-07</span></p>
+                        <h5 class="card-title" th:text="${gal.gallery.title}">갤러리 제목</h5>
+                        <p><span th:text="${gal.gallery.userid}">작성자</span>
+                            <span style="float: right" th:text="${gal.gallery.regdate}">2023-06-07</span></p>
                         <p>
                             <span style="float: right; margin-top: -10px" >
-                                <i class="fa-regular fa-thumbs-up"></i> <span>123</span>
-                                <i class="fa-regular fa-eye"></i> <span>456</span></span></p>
+                                <i class="fa-regular fa-thumbs-up"></i>
+                                <span th:text="${gal.gallery.thumbs}">123</span>
+                                <i class="fa-regular fa-eye"></i>
+                                <span th:text="${gal.gallery.views}">456</span>
+                            </span></p>
                     </div>
                 </div>
+
+                <p th:text="${cntpg}"></p>
+
             </div>
 
         </div>
