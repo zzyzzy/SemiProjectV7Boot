@@ -46,6 +46,9 @@ public class GalleryDAOImpl implements GalleryDAO {
         gals.put("gallist", galleryaRepository.findAllBy(paging).getContent());
         gals.put("cntpg", galleryaRepository.findAllBy(paging).getTotalPages());
 
+        System.out.println(gals.get("gallist"));
+        System.out.println(gals.get("cntpg"));
+
         return gals;
     }
 
