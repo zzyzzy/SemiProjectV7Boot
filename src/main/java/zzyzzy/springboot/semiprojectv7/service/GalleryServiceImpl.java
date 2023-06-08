@@ -49,4 +49,9 @@ public class GalleryServiceImpl implements GalleryService {
         return galdao.selectGallery(cpg - 1);
     }
 
+    @Override
+    public Object readOneGallery(int gno) {
+        return galdao.selectOneGallery(gno);
+    }
+
 }
