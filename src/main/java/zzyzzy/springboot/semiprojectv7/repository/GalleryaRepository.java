@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import zzyzzy.springboot.semiprojectv7.model.GalAttach;
 import zzyzzy.springboot.semiprojectv7.model.GalleryList;
+import zzyzzy.springboot.semiprojectv7.model.GalleryView;
 
 
 public interface GalleryaRepository
@@ -19,4 +20,5 @@ public interface GalleryaRepository
     //       " inner join GalAttach a on g.gno = a.gno ")
     Page<GalleryList> findAllBy(Pageable paging);
 
+    GalleryView findAllByGno(int gno);
 }
