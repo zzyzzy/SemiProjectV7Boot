@@ -58,5 +58,15 @@ public class GalleryController {
         return viewPage;
     }
 
+    @GetMapping("/view")
+    public ModelAndView view(int gno) {
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("gal", galsrv.readOneGallery(gno));
+        mv.setViewName("gallery/view");
+
+        return mv;
+    }
+
 
 }
