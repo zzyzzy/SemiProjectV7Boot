@@ -47,18 +47,18 @@ public class GalleryUtils {
             // 저장시 사용할 파일이름 생성
             // 파일이름 형식 : 파일이름UUID.확장자
             String savefname = fname.substring(0, pos - 1);
-            savefname = saveImgDir + savefname +
-                    ginfo.get("uuid") + "." + ext;
+            String fullname = savefname + ginfo.get("uuid") + "." + ext;
+            savefname = saveImgDir + fullname;
 
             try {
                 // 첨부파일을 파일시스템에 저장
                 attach.transferTo(new File(savefname));
 
                 // 첨부파일 정보를 리스트에 저장
-                fnames.add(fname);
+                fnames.add(fullname);    // 파일이름UUID.확장자
                 fsizes.add(fsize);
                 System.out.println(
-                    fname + "," + fsize + ',' + savefname);
+                    fullname + "," + fsize + ',' + savefname);
             } catch (Exception ex) {
                 System.out.println("업로드중 오류발생!!");
                 ex.printStackTrace();
